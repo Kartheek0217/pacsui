@@ -1,42 +1,34 @@
-<!-- /src/main/resources/static/index.html -->
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SpringbootJS App</title>
-    <link rel="stylesheet" href="/styles/styles.css" />
-  </head>
-  <body>
+    <link rel="stylesheet" href="/styles/styles.css">
+</head>
+<body>
     <nav>
-      <a href="/" data-link>Home</a>
-      <a href="/about" data-link>About</a>
-      <a href="/newPage" data-link>newPage</a>
+        <a href="/" data-link>Home</a>
+        <a href="/about" data-link>About</a>
+        <a href="/contact" data-link>Contact</a> <!-- New route -->
     </nav>
 
-    <div id="app"></div>
-    <!-- Dynamic content will be loaded here -->
+    <div id="app"></div> <!-- Dynamic content will be loaded here -->
 
-    <!-- Load the main.js entry point -->
+    <!-- Load the main.js script -->
     <script type="module" src="/scripts/main.js"></script>
 
-    <!-- Register the service worker for offline functionality -->
+    <!-- Service Worker for Offline Support -->
     <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function () {
-          navigator.serviceWorker.register('/serviceworker.js').then(
-            function (registration) {
-              console.log(
-                'ServiceWorker registration successful with scope: ',
-                registration.scope
-              );
-            },
-            function (err) {
-              console.log('ServiceWorker registration failed: ', err);
-            }
-          );
-        });
-      }
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/serviceworker.js').then(function(registration) {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, function(err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
     </script>
-  </body>
+</body>
 </html>
