@@ -1,5 +1,4 @@
 // /src/main/resources/static/scripts/core/App.js
-
 import Router from '../router/Router.js';
 import { populateDropdown } from '../utils/util.js';
 
@@ -9,7 +8,7 @@ export default class App {
         this.router = new Router([
             { path: '/', view: '/views/home.html', init: this.initHome },
             { path: '/about', view: '/views/about.html' },
-            { path: '/contact', view: '/views/contact.html' }  // New Contact Page route
+            { path: '/contact', view: '/views/contact.html', init: this.initContact }  // Contact route with init function
         ]);
 
         this.setupNavigation();
@@ -27,19 +26,26 @@ export default class App {
         });
     }
 
-    // This method handles logic after loading a specific route (like populating dropdowns, etc.)
-    handleRouteChange() {
+    async handleRouteChange() {
+        // Load the view using the router
+        await this.router.loadRoute();
+
         const path = window.location.pathname;
 
-        // You can define route-specific logic here (like initializing components for each route)
+        // Call route-specific init functions (if they exist)
         const route = this.router.routes.find(r => r.path === path);
         if (route && route.init) {
-            route.init();  // If there is an init method for the route, call it
+            route.init();  // Call the init function (like populating dropdown) after the view is loaded
         }
     }
 
     // Init function for the Home route
     initHome() {
         populateDropdown('/api/categories', 'categoryDropdown', 'id', 'name');
+    }
+
+    // Init function for the Contact route (populates dropdown after loading the view)
+    initContact() {
+        populateDropdown('https://jsonplaceholder.typicode.com/users', 'userDropdown', 'id', 'name');
     }
 }
